@@ -34,6 +34,11 @@ h1, h3 {
     color: #f1eeee;
 }
 
+h1 {
+    font-size: 1.5em; /* Make it small */
+    opacity: 0.7; /* Make it transparent */
+}
+
 .add-task, .filter-tasks {
     display: flex;
     justify-content: space-between;
@@ -306,4 +311,34 @@ ul#recycleBin li.completed .restore-button {
         transform: translateY(0);
         opacity: 1;
     }
+}
+
+/* Progress container styling */
+.progress-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    opacity: 0.7; /* Make it transparent */
+}
+
+.progress-container label {
+    margin-right: 10px;
+    font-size: 0.8em; /* Make it small */
+}
+
+.progress-container progress {
+    flex: 1;
+    margin-right: 10px;
+    height: 10px; /* Make it small */
+}
+
+.progress-container span {
+    font-weight: bold;
+    font-size: 0.8em; /* Make it small */
+}
+
+.date {
+    font-size: 0.8em;
+    color: var(--other-color);
+    margin-left: 10px;
 }

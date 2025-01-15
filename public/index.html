@@ -29,6 +29,7 @@
             <button id="addTaskButton">Add Task</button>
         </div>
         <br>
+        
         <div class="filter-tasks">
             <label for="filterCategory">Filter by category:</label>
             <select id="filterCategory">
@@ -40,6 +41,11 @@
                 <option value="finance">Finance</option>
                 <option value="education">Education</option>
             </select>
+        </div>
+        <div class="progress-container">
+            <label for="progressBar">Task Completion Progress:</label>
+            <progress id="progressBar" value="0" max="100"></progress>
+            <span id="progressPercentage">0%</span>
         </div>
         <ul id="taskList"></ul>
         <i class="recycle-bin-icon">🗑️</i>
