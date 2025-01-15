@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <h3>Please click on the task to mark as <strong>Completed</strong></h3>
+        <hr>
+        <br>
+        <div class="add-task">
+            <input type="text" id="taskInput" placeholder="Enter a new task">
+            <select id="categorySelect">
+                <option value="all">All</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="shopping">Shopping</option>
+                <option value="health">Health</option>
+                <option value="finance">Finance</option>
+                <option value="education">Education</option>
+            </select>
+            <button id="addTaskButton">Add Task</button>
+        </div>
+        <br>
+        <div class="filter-tasks">
+            <label for="filterCategory">Filter by category:</label>
+            <select id="filterCategory">
+                <option value="all">All</option>
+                <option value="work">Work</option>
+                <option value="personal">Personal</option>
+                <option value="shopping">Shopping</option>
+                <option value="health">Health</option>
+                <option value="finance">Finance</option>
+                <option value="education">Education</option>
+            </select>
+        </div>
+        <ul id="taskList"></ul>
+        <h3>Recycle Bin</h3>
+        <ul id="recycleBin"></ul>
+    </div>
+    <script src="/index.js"></script>
+</body>
+</html>
+
+
