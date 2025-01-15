@@ -6,6 +6,8 @@
     <title>ToDo App</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -40,8 +42,12 @@
             </select>
         </div>
         <ul id="taskList"></ul>
-        <h3>Recycle Bin</h3>
+        <i class="recycle-bin-icon">🗑️</i>
         <ul id="recycleBin"></ul>
+        <div class="button-container">
+            <button id="clearRecycleBinButton">Clear Recycle Bin</button>
+            <button id="clearAllDataButton">Clear All Data</button>
+        </div>
     </div>
     <script src="index.js"></script>
 </body>

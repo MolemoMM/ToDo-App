@@ -5,11 +5,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const recycleBin = document.getElementById('recycleBin');
     const categorySelect = document.getElementById('categorySelect');
     const filterCategory = document.getElementById('filterCategory');
+    const clearRecycleBinButton = document.getElementById('clearRecycleBinButton');
+    const clearAllDataButton = document.getElementById('clearAllDataButton');
 
     // Initialize Typed.js for the h1 heading
     var typed = new Typed(".input", {
         strings: [
-
             "Organize Your Tasks!", "Make Life Easier!"
         ],
         typeSpeed: 120,
@@ -24,14 +25,20 @@ document.addEventListener('DOMContentLoaded', () => {
     // Load tasks from localStorage when the page loads
     loadTasks();
 
-    addTaskButton.addEventListener('click', addTask);
+    addTaskButton.addEventListener('click', () => {
+        if (addTask()) {
+            fireConfetti();
+        }
+    });
     filterCategory.addEventListener('change', filterTasks);
+    clearRecycleBinButton.addEventListener('click', clearRecycleBin);
+    clearAllDataButton.addEventListener('click', clearAllData);
 
     function addTask() {
         const taskText = taskInput.value.trim();
         const category = categorySelect.value;
 
-        if (taskText === '') return;
+        if (taskText === '') return false;
 
         const task = {
             text: taskText,
@@ -45,8 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         taskInput.value = '';
         categorySelect.value = 'all';
 
-        // Add animation class
-        li.classList.add('fade-in');
+        return true;
     }
 
     function saveTask(task) {
@@ -127,5 +133,45 @@ document.addEventListener('DOMContentLoaded', () => {
     function moveToRecycleBin(li) {
         li.classList.add('completed');
         recycleBin.appendChild(li);
+
+        // Add Restore button
+        const restoreButton = document.createElement('button');
+        restoreButton.textContent = 'Restore';
+        restoreButton.classList.add('restore-button');
+        restoreButton.addEventListener('click', () => {
+            restoreTask(li);
+        });
+        li.appendChild(restoreButton);
+    }
+
+    function restoreTask(li) {
+        li.classList.remove('completed');
+        taskList.appendChild(li);
+        const restoreButton = li.querySelector('.restore-button');
+        if (restoreButton) {
+            restoreButton.remove();
+        }
+    }
+
+    function clearRecycleBin() {
+        while (recycleBin.firstChild) {
+            recycleBin.removeChild(recycleBin.firstChild);
+        }
+    }
+
+    function clearAllData() {
+        localStorage.removeItem('tasks');
+        while (taskList.firstChild) {
+            taskList.removeChild(taskList.firstChild);
+        }
+        clearRecycleBin();
+    }
+
+    function fireConfetti() {
+        confetti({
+            particleCount: 100,
+            spread: 70,
+            origin: { y: 0.6 }
+        });
     }
 });

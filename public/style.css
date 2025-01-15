@@ -61,7 +61,6 @@ h1, h3 {
 }
 
 .add-task button::after {
-    content: '';
     position: absolute;
     top: 0;
     left: 0;
@@ -70,7 +69,7 @@ h1, h3 {
     background: rgba(255, 255, 255, 0.2);
     transition: transform 0.3s ease;
     transform: scaleX(0);
-    transform-origin: left;
+    
 }
 
 .add-task button:hover::after {
@@ -145,6 +144,86 @@ ul#taskList li button:hover::after, ul#recycleBin li button:hover::after {
 
 ul#taskList li button:hover, ul#recycleBin li button:hover {
     color: var(--main-color);
+}
+
+/* Add styles for the Restore button */
+.restore-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--main-color);
+    font-size: 0.9em;
+    margin-left: 10px;
+    transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none; /* Ensure no text decoration */
+}
+
+.restore-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 123, 255, 0.2);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.restore-button:hover::after {
+    transform: scaleX(1);
+}
+
+.restore-button:hover {
+    color: var(--main-color);
+}
+
+/* Ensure the Restore button is not affected by the completed class */
+ul#recycleBin li.completed .restore-button {
+    text-decoration: none;
+    color: var(--main-color);
+}
+
+/* Add styles for the Clear Recycle Bin button */
+#clearRecycleBinButton {
+    display: inline-block;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
+    color: var(--bg-color);
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 13px; /* Rounded corners */
+}
+
+#clearRecycleBinButton:hover {
+    background-color: darken(var(--main-color), 10%);
+}
+
+/* Add styles for the Clear All Data button */
+#clearAllDataButton {
+    display: inline-block;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
+    color: var(--bg-color);
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 13px; /* Rounded corners */
+    margin-left: auto; /* Align to the right */
+}
+
+/* Container for the buttons */
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+#clearAllDataButton:hover {
+    background-color: darkred;
 }
 
 /* Rate It section */
