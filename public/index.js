@@ -6,7 +6,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const categorySelect = document.getElementById('categorySelect');
     const filterCategory = document.getElementById('filterCategory');
 
-    // Load tasks from the server when the page loads
+    // Initialize Typed.js for the h1 heading
+    var typed = new Typed(".input", {
+        strings: [
+
+            "Organize Your Tasks!", "Make Life Easier!"
+        ],
+        typeSpeed: 120,
+        backSpeed: 70,
+        loop: true,
+        preStringTyped: (arrayPos, self) => {
+            const colors = [' var(--main-color)', ' var(--main-color)'];
+            document.querySelector('.input').style.color = colors[arrayPos % colors.length];
+        }
+    });
+
+    // Load tasks from localStorage when the page loads
     loadTasks();
 
     addTaskButton.addEventListener('click', addTask);
@@ -18,15 +33,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (taskText === '') return;
 
+        const task = {
+            text: taskText,
+            category: category,
+            completed: false
+        };
+
+        saveTask(task);
+        displayTask(task);
+
+        taskInput.value = '';
+        categorySelect.value = 'all';
+
+        // Add animation class
+        li.classList.add('fade-in');
+    }
+
+    function saveTask(task) {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.push(task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    function loadTasks() {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks.forEach(task => {
+            displayTask(task);
+        });
+    }
+
+    // Display a task in the list
+    function displayTask(task) {
         const li = document.createElement('li');
         li.classList.add('task-item');
-        li.dataset.category = category;
+        li.dataset.category = task.category;
 
         const taskSpan = document.createElement('span');
-        taskSpan.textContent = taskText;
+        taskSpan.textContent = task.text;
 
         const categorySpan = document.createElement('span');
-        categorySpan.textContent = category;
+        categorySpan.textContent = task.category;
         categorySpan.classList.add('category');
 
         const completeButton = document.createElement('button');
@@ -40,61 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
         li.appendChild(completeButton);
         taskList.appendChild(li);
 
-        taskInput.value = '';
-        categorySelect.value = 'all';
-    }
-
-    // Load tasks from the server
-    function loadTasks() {
-        fetch('/tasks')
-            .then(response => response.json())
-            .then(data => {
-                taskList.innerHTML = '';  // Clear the list before adding new tasks
-                data.forEach(task => {
-                    displayTask(task);
-                });
-            })
-            .catch(err => console.error('Error loading tasks:', err));
-    }
-
-    // Display a task in the list
-    function displayTask(task) {
-        const li = document.createElement('li');
-        li.textContent = task.task;
-        li.classList.toggle('completed', task.completed);  // Add "completed" class if the task is completed
-        li.dataset.category = task.category;
-
-        const categorySpan = document.createElement('span');
-        categorySpan.textContent = task.category;
-        categorySpan.classList.add('category');
-        li.appendChild(categorySpan);
-
-        // Mark task as completed when clicked
-        li.addEventListener('click', () => {
-            toggleTaskCompletion(task.id, li);
-        });
-
-        // Edit task button
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.classList.add('edit-btn');
-        editButton.onclick = (e) => {
-            e.stopPropagation();  // Prevent triggering the click event to mark as complete
-            editTask(task, li);
-        };
-
-        // Delete task button
-        const deleteButton = document.createElement('button');
-        deleteButton.textContent = 'Delete';
-        deleteButton.classList.add('delete-btn');
-        deleteButton.onclick = (e) => {
-            e.stopPropagation();  // Prevent triggering the click event to mark as complete
-            deleteTask(task.id, li);
-        };
-
-        li.appendChild(editButton);
-        li.appendChild(deleteButton);
-        taskList.appendChild(li);
+        // Add animation class
+        li.classList.add('fade-in');
     }
 
     // Toggle task completion (mark as completed or not)
@@ -103,6 +96,8 @@ document.addEventListener('DOMContentLoaded', () => {
             .then(response => response.json())
             .then(data => {
                 li.classList.toggle('completed', data.completed);
+                // Add animation class
+                li.classList.add('slide-in');
             })
             .catch(err => console.error('Error toggling completion:', err));
     }

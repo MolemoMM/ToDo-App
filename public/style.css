@@ -1,6 +1,21 @@
+/* Define color scheme */
+:root {
+
+    --typing-color-1: #ff5733;
+    --typing-color-2: #33c4ff;
+    --bg-color: #121212; /* Background color */
+    --second-bg-color: #202020; /* Secondary background color */
+    --text-color: #ffffff; /* Text color */
+    --main-color: #962010; /* Main accent color */
+    --other-color: #8b8a91; /* Color for secondary text */
+    --alt-color: #4b4b51; /* Alternative color for borders and some text */
+    --ann-color: #c7c6de; /* Lighter accent color for announcements or small elements */
+}
+
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
 }
@@ -8,7 +23,7 @@ body {
 .container {
     max-width: 600px;
     margin: 50px auto;
-    background: #fff;
+    background: var(--alt-color);
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -16,7 +31,7 @@ body {
 
 h1, h3 {
     text-align: center;
-    color: #333;
+    color: #f1eeee;
 }
 
 .add-task, .filter-tasks {
@@ -30,22 +45,40 @@ h1, h3 {
     flex: 1;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--main-color);
     border-radius: 4px;
 }
 
 .add-task button {
-    padding: 10px 20px;
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+    display: inline-block;
+    padding: 15px 25px;
+    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
+    color: var(--bg-color);
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: 13px; /* Rounded corners */
+}
+
+.add-task button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.add-task button:hover::after {
+    transform: scaleX(1);
 }
 
 .add-task button:hover {
-    background-color: #218838;
+    background-color: var(--main-color);
 }
 
 ul#taskList, ul#recycleBin {
@@ -54,7 +87,7 @@ ul#taskList, ul#recycleBin {
 }
 
 ul#taskList li, ul#recycleBin li {
-    background: #f9f9f9;
+    background: var(--second-bg-color);
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ddd;
@@ -63,6 +96,7 @@ ul#taskList li, ul#recycleBin li {
     justify-content: space-between;
     align-items: center;
     transition: background-color 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 ul#taskList li:hover, ul#recycleBin li:hover {
@@ -72,6 +106,7 @@ ul#taskList li:hover, ul#recycleBin li:hover {
 ul#taskList li.completed, ul#recycleBin li.completed {
     text-decoration: line-through;
     color: #999;
+    animation: slideIn 0.5s ease-in-out;
 }
 
 ul#taskList li .category, ul#recycleBin li .category {
@@ -83,12 +118,113 @@ ul#taskList li button, ul#recycleBin li button {
     background: none;
     border: none;
     cursor: pointer;
-    color: #007bff;
+    color: var(--other-color);
     font-size: 0.9em;
     margin-left: 10px;
     transition: color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+ul#taskList li button::after, ul#recycleBin li button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 123, 255, 0.2);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+ul#taskList li button:hover::after, ul#recycleBin li button:hover::after {
+    transform: scaleX(1);
 }
 
 ul#taskList li button:hover, ul#recycleBin li button:hover {
-    color: #0056b3;
+    color: var(--main-color);
+}
+
+/* Rate It section */
+.rate-it {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: var(--second-bg-color);
+    border: 1px solid var(--main-color);
+    border-radius: 4px;
+}
+
+.rate-it h2 {
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.rate-it button {
+    padding: 10px 20px;
+    background-color: var(--second-bg-color);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.rate-it button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.rate-it button:hover::after {
+    transform: scaleX(1);
+}
+
+.rate-it button:hover {
+    background-color: var(--secondary-color-hover);
+}
+
+/* Typing animation styling */
+.input {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+    color: var(--main-color);
+    transition: color 0.5s ease-in-out;
+}
+
+.input .typed-cursor {
+    font-size: 2em;
+    color: var(--main-color);
+}
+
+/* Add animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
