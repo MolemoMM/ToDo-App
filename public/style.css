@@ -84,7 +84,7 @@ h1 {
 }
 
 .add-task button:hover {
-    background-color: darken(var(--main-color), 10%);
+    background-color: var(--success-color);
 }
 
 ul#taskList, ul#recycleBin {
@@ -99,8 +99,9 @@ ul#taskList li, ul#recycleBin li {
     border: 1px solid var(--alt-color);
     border-radius: 4px;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
     transition: background-color 0.3s ease;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -111,13 +112,19 @@ ul#taskList li:hover, ul#recycleBin li:hover {
 
 ul#taskList li.completed, ul#recycleBin li.completed {
     text-decoration: line-through;
-    color: var (--other-color);
+    color: var(--other-color);
     animation: slideIn 0.5s ease-in-out;
 }
 
 ul#taskList li .category, ul#recycleBin li .category {
     font-size: 0.9em;
     color: var(--other-color);
+}
+
+ul#taskList li .timestamp, ul#recycleBin li .timestamp {
+    font-size: 0.8em;
+    color: var(--other-color);
+    margin-top: 5px;
 }
 
 ul#taskList li button, ul#recycleBin li button {
@@ -155,10 +162,10 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
 
 /* Add styles for the Restore button */
 .restore-button {
-    background: none;
+    background: var(--success-color);
     border: none;
     cursor: pointer;
-    color: var(--main-color);
+    color: var(--success-color);
     font-size: 0.9em;
     margin-left: 10px;
     transition: color 0.3s ease;
@@ -174,7 +181,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 123, 255, 0.2);
+    background: var(--success-color);
     transition: transform 0.3s ease;
     transform: scaleX(0);
     transform-origin: left;
@@ -185,7 +192,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
 }
 
 .restore-button:hover {
-    color: darken(var(--main-color), 10%);
+    color: var(--success-color);
 }
 
 /* Ensure the Restore button is not affected by the completed class */
@@ -197,30 +204,34 @@ ul#recycleBin li.completed .restore-button {
 /* Add styles for the Clear Recycle Bin button */
 #clearRecycleBinButton {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 10px 15px; /* Smaller padding */
     background: var(--main-color);
     color: var(--second-bg-color);
-    font-size: 10px;
+    font-size: 12px; /* Smaller font size */
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
     border: none;
 }
 
 #clearRecycleBinButton:hover {
-    background-color: var(--success-color)
+    background-color: var(--danger-color);
 }
 
 /* Add styles for the Clear All Data button */
 #clearAllDataButton {
     display: inline-block;
-    padding: 15px 25px;
+    padding: 10px 15px; /* Smaller padding */
     background: var(--main-color);
     color: var(--second-bg-color);
-    font-size: 10px;
+    font-size: 12px; /* Smaller font size */
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
     margin-left: auto; /* Align to the right */
     border: none;
+}
+
+#clearAllDataButton:hover {
+    background-color: darkred;
 }
 
 /* Container for the buttons */
@@ -238,24 +249,6 @@ ul#recycleBin li.completed .restore-button {
     margin: 0 20px;
     flex-grow: 1;
     text-align: center;
-}
-
-#clearRecycleBinButton, #clearAllDataButton {
-    flex-grow: 1;
-    text-align: center;
-    padding: 10px 10px; /* Smaller padding */
-    font-size: 12px; /* Smaller font size */
-}
-
-#clearAllDataButton:hover {
-    background-color: darkred;
-}
-
-/* Recycle bin icon */
-.recycle-bin-icon {
-    font-size: 24px;
-    cursor: pointer;
-    margin: 0 20px;
 }
 
 .hidden {
