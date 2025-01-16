@@ -238,6 +238,43 @@ ul#recycleBin li.completed .restore-button {
     background-color: darkred;
 }
 
+/* Add styles for the Toggle Background button */
+.styled-button {
+    display: inline-block;
+    padding: 10px 15px; /* Adjust padding as needed */
+    background: var(--main-color);
+    color: var(--second-bg-color);
+    font-size: 12px; /* Adjust font size as needed */
+    font-weight: 500;
+    border-radius: 13px; /* Rounded corners */
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.styled-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: transform 0.3s ease;
+    transform: scaleX(0);
+    transform-origin: left;
+}
+
+.styled-button:hover::after {
+    transform: scaleX(1);
+}
+
+.styled-button:hover {
+    background-color: var(--success-color);
+}
+
 /* Container for the buttons */
 .button-container {
     display: flex;

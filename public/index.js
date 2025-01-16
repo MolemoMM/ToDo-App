@@ -8,6 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearRecycleBinButton = document.getElementById('clearRecycleBinButton');
     const clearAllDataButton = document.getElementById('clearAllDataButton');
     const recycleBinIcon = document.getElementById('recycleBinIcon');
+    const toggleBackgroundButton = document.getElementById('toggleBackgroundButton');
+    const bgVideo = document.getElementById('bgVideo');
+    const videoSources = [
+        './images/vid1.mp4',
+        './images/vid2.mp4',
+        './images/vid3.mp4'
+    ];
+    let currentVideoIndex = 0;
 
     // Initialize Typed.js for the h1 heading
   
@@ -24,6 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearRecycleBinButton.addEventListener('click', clearRecycleBin);
     clearAllDataButton.addEventListener('click', clearAllData);
     recycleBinIcon.addEventListener('click', toggleRecycleBin);
+    toggleBackgroundButton.addEventListener('click', toggleBackgroundVideo);
 
     function addTask() {
         const taskText = taskInput.value.trim();
@@ -203,5 +212,11 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log('Task saved:', data);
         })
         .catch(err => console.error('Error saving task:', err));
+    }
+
+    function toggleBackgroundVideo() {
+        currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
+        bgVideo.querySelector('source').src = videoSources[currentVideoIndex];
+        bgVideo.load();
     }
 });
