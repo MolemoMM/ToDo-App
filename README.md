@@ -1,4 +1,4 @@
-# Live WebsiteLink: https://to-do-app-t5sp-fea0dubq6-molemo-mamashelas-projects.vercel.app
+# Live WebsiteLink: 
 # ToDo App
 
 A powerful and intuitive ToDo application designed to help you manage your tasks efficiently. The app supports task categorization, completion tracking, a recycle bin for completed tasks, and offers a seamless user experience. All completed tasks are stored in a JSON file for easy retrieval and restoration.
