@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
@@ -22,7 +23,7 @@ app.get('/tasks', (req, res) => {
 app.post('/tasks', (req, res) => {
   const task = req.body.task;
   if (task) {
-    tasks.push({ id: Date.now(), task, completed: false });
+    tasks.push({ id: Date.now(), task, completed: false, createdAt: new Date(), completedAt: null });
     res.status(201).json({ message: 'Task added' });
   } else {
     res.status(400).json({ message: 'Task content is required' });
@@ -42,14 +43,55 @@ app.patch('/tasks/:id/toggle', (req, res) => {
   const task = tasks.find(task => task.id === taskId);
   if (task) {
     task.completed = !task.completed;  // Toggle completion
+    task.completedAt = task.completed ? new Date() : null; // Set or clear completedAt
     res.status(200).json({ message: 'Task completion status toggled', completed: task.completed });
   } else {
     res.status(404).json({ message: 'Task not found' });
   }
 });
 
+// API to save a completed task
+app.post('/saveCompletedTask', (req, res) => {
+    const completedTask = req.body.task;
+    if (completedTask) {
+        // Read the existing completed tasks from the JSON file
+        fs.readFile('completedTasks.json', 'utf8', (err, data) => {
+            if (err && err.code !== 'ENOENT') {
+                return res.status(500).json({ error: 'Failed to read completed tasks' });
+            }
+
+            let completedTasks = [];
+            if (data) {
+                completedTasks = JSON.parse(data);
+            }
+
+            // Add the new completed task
+            completedTasks.push(completedTask);
+
+            // Write the updated completed tasks back to the JSON file
+            fs.writeFile('completedTasks.json', JSON.stringify(completedTasks, null, 2), (err) => {
+                if (err) {
+                    return res.status(500).json({ error: 'Failed to save completed task' });
+                }
+                res.json({ message: 'Task saved successfully' });
+            });
+        });
+    } else {
+        res.status(400).json({ error: 'Invalid task data' });
+    }
+});
+
+// API to clear all completed tasks
+app.delete('/clearCompletedTasks', (req, res) => {
+    fs.writeFile('completedTasks.json', JSON.stringify([], null, 2), (err) => {
+        if (err) {
+            return res.status(500).json({ error: 'Failed to clear completed tasks' });
+        }
+        res.json({ message: 'Completed tasks cleared successfully' });
+    });
+});
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server is running on http://localhost:${port}`);
 });

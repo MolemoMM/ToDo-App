@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        <h1 class="input"></h1>
+        <h1>Organize Your Tasks!</h1>
         <h3>Please click on the task to mark as <strong>Completed</strong></h3>
         <hr>
         <br>
@@ -42,18 +42,13 @@
                 <option value="education">Education</option>
             </select>
         </div>
-        <div class="progress-container">
-            <label for="progressBar">Task Completion Progress:</label>
-            <progress id="progressBar" value="0" max="100"></progress>
-            <span id="progressPercentage">0%</span>
-        </div>
         <ul id="taskList"></ul>
-        <i class="recycle-bin-icon">🗑️</i>
-        <ul id="recycleBin"></ul>
         <div class="button-container">
             <button id="clearRecycleBinButton">Clear Recycle Bin</button>
+            <i class="recycle-bin-icon" id="recycleBinIcon">🗑️</i>
             <button id="clearAllDataButton">Clear All Data</button>
         </div>
+        <ul id="recycleBin" class="hidden"></ul>
     </div>
     <script src="index.js"></script>
 </body>

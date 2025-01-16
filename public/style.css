@@ -1,15 +1,17 @@
 /* Define color scheme */
 :root {
-
     --typing-color-1: #ff5733;
     --typing-color-2: #33c4ff;
-    --bg-color: #121212; /* Background color */
-    --second-bg-color: #202020; /* Secondary background color */
-    --text-color: #ffffff; /* Text color */
-    --main-color: #962010; /* Main accent color */
-    --other-color: #8b8a91; /* Color for secondary text */
-    --alt-color: #4b4b51; /* Alternative color for borders and some text */
-    --ann-color: #c7c6de; /* Lighter accent color for announcements or small elements */
+    --bg-color: #f8f9fa; /* Light background color */
+    --second-bg-color: #ffffff; /* White secondary background color */
+    --text-color: #343a40; /* Dark text color */
+    --main-color: #007bff; /* Blue main accent color */
+    --other-color: #6c757d; /* Gray color for secondary text */
+    --alt-color: #e9ecef; /* Light gray alternative color for borders and some text */
+    --ann-color: #17a2b8; /* Teal accent color for announcements or small elements */
+    --success-color: #28a745; /* Green success color */
+    --warning-color: #ffc107; /* Yellow warning color */
+    --danger-color: #dc3545; /* Red danger color */
 }
 
 body {
@@ -23,7 +25,7 @@ body {
 .container {
     max-width: 600px;
     margin: 50px auto;
-    background: var(--alt-color);
+    background: var(--second-bg-color);
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
@@ -31,7 +33,7 @@ body {
 
 h1, h3 {
     text-align: center;
-    color: #f1eeee;
+    color: var(--text-color);
 }
 
 h1 {
@@ -50,19 +52,19 @@ h1 {
     flex: 1;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid var(--main-color);
+    border: 1px solid var(--alt-color);
     border-radius: 4px;
 }
 
 .add-task button {
-
     display: inline-block;
     padding: 15px 25px;
-    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
-    color: var(--bg-color);
+    background: var(--main-color);
+    color: var(--second-bg-color);
     font-size: 10px;
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
+    border: none;
 }
 
 .add-task button::after {
@@ -71,7 +73,7 @@ h1 {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(255, 255, 255, 0.2);
+    background: var(--success-color);
     transition: transform 0.3s ease;
     transform: scaleX(0);
     
@@ -82,7 +84,7 @@ h1 {
 }
 
 .add-task button:hover {
-    background-color: var(--main-color);
+    background-color: darken(var(--main-color), 10%);
 }
 
 ul#taskList, ul#recycleBin {
@@ -94,7 +96,7 @@ ul#taskList li, ul#recycleBin li {
     background: var(--second-bg-color);
     padding: 10px;
     margin-bottom: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--alt-color);
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
@@ -104,18 +106,18 @@ ul#taskList li, ul#recycleBin li {
 }
 
 ul#taskList li:hover, ul#recycleBin li:hover {
-    background-color: #f1f1f1;
+    background-color: var(--alt-color);
 }
 
 ul#taskList li.completed, ul#recycleBin li.completed {
     text-decoration: line-through;
-    color: #999;
+    color: var (--other-color);
     animation: slideIn 0.5s ease-in-out;
 }
 
 ul#taskList li .category, ul#recycleBin li .category {
     font-size: 0.9em;
-    color: #666;
+    color: var(--other-color);
 }
 
 ul#taskList li button, ul#recycleBin li button {
@@ -183,7 +185,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
 }
 
 .restore-button:hover {
-    color: var(--main-color);
+    color: darken(var(--main-color), 10%);
 }
 
 /* Ensure the Restore button is not affected by the completed class */
@@ -196,27 +198,29 @@ ul#recycleBin li.completed .restore-button {
 #clearRecycleBinButton {
     display: inline-block;
     padding: 15px 25px;
-    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
-    color: var(--bg-color);
+    background: var(--main-color);
+    color: var(--second-bg-color);
     font-size: 10px;
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
+    border: none;
 }
 
 #clearRecycleBinButton:hover {
-    background-color: darken(var(--main-color), 10%);
+    background-color: var(--success-color)
 }
 
 /* Add styles for the Clear All Data button */
 #clearAllDataButton {
     display: inline-block;
     padding: 15px 25px;
-    background: linear-gradient(135deg, #e1bac5 0%, var(--main-color) 100%);
-    color: var(--bg-color);
+    background: var(--main-color);
+    color: var(--second-bg-color);
     font-size: 10px;
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
     margin-left: auto; /* Align to the right */
+    border: none;
 }
 
 /* Container for the buttons */
@@ -225,10 +229,44 @@ ul#recycleBin li.completed .restore-button {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    margin-bottom: 20px;
+}
+
+.button-container .recycle-bin-icon {
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0 20px;
+    flex-grow: 1;
+    text-align: center;
+}
+
+#clearRecycleBinButton, #clearAllDataButton {
+    flex-grow: 1;
+    text-align: center;
+    padding: 10px 10px; /* Smaller padding */
+    font-size: 12px; /* Smaller font size */
 }
 
 #clearAllDataButton:hover {
     background-color: darkred;
+}
+
+/* Recycle bin icon */
+.recycle-bin-icon {
+    font-size: 24px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Timestamp styling */
+.timestamp {
+    font-size: 0.8em;
+    color: var(--other-color);
+    margin-left: 10px;
 }
 
 /* Rate It section */
@@ -236,19 +274,19 @@ ul#recycleBin li.completed .restore-button {
     margin-top: 20px;
     padding: 20px;
     background-color: var(--second-bg-color);
-    border: 1px solid var(--main-color);
+    border: 1px solid var(--alt-color);
     border-radius: 4px;
 }
 
 .rate-it h2 {
     margin-bottom: 10px;
-    color: var(--secondary-color);
+    color: var(--text-color);
 }
 
 .rate-it button {
     padding: 10px 20px;
-    background-color: var(--second-bg-color);
-    color: #fff;
+    background-color: var(--main-color);
+    color: var(--second-bg-color);
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -275,7 +313,7 @@ ul#recycleBin li.completed .restore-button {
 }
 
 .rate-it button:hover {
-    background-color: var(--secondary-color-hover);
+    background-color: darken(var(--main-color), 10%);
 }
 
 /* Typing animation styling */
@@ -311,34 +349,4 @@ ul#recycleBin li.completed .restore-button {
         transform: translateY(0);
         opacity: 1;
     }
-}
-
-/* Progress container styling */
-.progress-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-    opacity: 0.7; /* Make it transparent */
-}
-
-.progress-container label {
-    margin-right: 10px;
-    font-size: 0.8em; /* Make it small */
-}
-
-.progress-container progress {
-    flex: 1;
-    margin-right: 10px;
-    height: 10px; /* Make it small */
-}
-
-.progress-container span {
-    font-weight: bold;
-    font-size: 0.8em; /* Make it small */
-}
-
-.date {
-    font-size: 0.8em;
-    color: var(--other-color);
-    margin-left: 10px;
 }

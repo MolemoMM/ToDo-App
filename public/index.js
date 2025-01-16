@@ -7,20 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const filterCategory = document.getElementById('filterCategory');
     const clearRecycleBinButton = document.getElementById('clearRecycleBinButton');
     const clearAllDataButton = document.getElementById('clearAllDataButton');
+    const recycleBinIcon = document.getElementById('recycleBinIcon');
 
     // Initialize Typed.js for the h1 heading
-    var typed = new Typed(".input", {
-        strings: [
-            "Organize Your Tasks!", "Make Life Easier!"
-        ],
-        typeSpeed: 120,
-        backSpeed: 70,
-        loop: true,
-        preStringTyped: (arrayPos, self) => {
-            const colors = [' var(--main-color)', ' var(--main-color)'];
-            document.querySelector('.input').style.color = colors[arrayPos % colors.length];
-        }
-    });
+  
 
     // Load tasks from localStorage when the page loads
     loadTasks();
@@ -33,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
     filterCategory.addEventListener('change', filterTasks);
     clearRecycleBinButton.addEventListener('click', clearRecycleBin);
     clearAllDataButton.addEventListener('click', clearAllData);
+    recycleBinIcon.addEventListener('click', toggleRecycleBin);
 
     function addTask() {
         const taskText = taskInput.value.trim();
@@ -43,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const task = {
             text: taskText,
             category: category,
-            completed: false
+            completed: false,
+            createdAt: new Date().toLocaleString(),
+            completedAt: null
         };
 
         saveTask(task);
@@ -81,14 +74,19 @@ document.addEventListener('DOMContentLoaded', () => {
         categorySpan.textContent = task.category;
         categorySpan.classList.add('category');
 
+        const createdAtSpan = document.createElement('span');
+        createdAtSpan.textContent = `Added: ${task.createdAt}`;
+        createdAtSpan.classList.add('timestamp');
+
         const completeButton = document.createElement('button');
         completeButton.textContent = 'Complete';
         completeButton.addEventListener('click', () => {
-            moveToRecycleBin(li);
+            moveToRecycleBin(li, task);
         });
 
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
+        li.appendChild(createdAtSpan);
         li.appendChild(completeButton);
         taskList.appendChild(li);
 
@@ -130,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    function moveToRecycleBin(li) {
+    function moveToRecycleBin(li, task) {
         li.classList.add('completed');
         recycleBin.appendChild(li);
 
@@ -142,6 +140,15 @@ document.addEventListener('DOMContentLoaded', () => {
             restoreTask(li);
         });
         li.appendChild(restoreButton);
+
+        // Add completed timestamp
+        const completedAtSpan = document.createElement('span');
+        completedAtSpan.textContent = `Completed: ${new Date().toLocaleString()}`;
+        completedAtSpan.classList.add('timestamp');
+        li.appendChild(completedAtSpan);
+
+        // Save to JSON file
+        saveCompletedTask(task);
     }
 
     function restoreTask(li) {
@@ -150,6 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const restoreButton = li.querySelector('.restore-button');
         if (restoreButton) {
             restoreButton.remove();
+        }
+        const completedAtSpan = li.querySelector('.timestamp');
+        if (completedAtSpan) {
+            completedAtSpan.remove();
         }
     }
 
@@ -173,5 +184,24 @@ document.addEventListener('DOMContentLoaded', () => {
             spread: 70,
             origin: { y: 0.6 }
         });
+    }
+
+    function toggleRecycleBin() {
+        recycleBin.classList.toggle('hidden');
+    }
+
+    function saveCompletedTask(task) {
+        fetch('/saveCompletedTask', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ task: task.textContent })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Task saved:', data);
+        })
+        .catch(err => console.error('Error saving task:', err));
     }
 });
