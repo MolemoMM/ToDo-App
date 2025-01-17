@@ -20,6 +20,10 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
+    height: 100vh; /* Ensure body covers the full viewport height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-size: cover; /* Ensure the image covers the entire background */
     background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
@@ -27,12 +31,14 @@ body {
 }
 
 .container {
+    width: 100%;
     max-width: 600px;
-    margin: 50px auto;
+    margin: 20px;
     background: var(--second-bg-color);
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
+    box-sizing: border-box; /* Include padding and border in element's total width and height */
 }
 
 h1, h3 {
@@ -47,6 +53,7 @@ h1 {
 
 .add-task, .filter-tasks {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
@@ -58,6 +65,7 @@ h1 {
     margin-right: 10px;
     border: 1px solid var(--alt-color);
     border-radius: 4px;
+    margin-bottom: 10px;
 }
 
 .add-task button {
@@ -168,7 +176,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
     background: var(--success-color);
     border: none;
     cursor: pointer;
-    color: var(--success-color);
+    color: var(--second-bg-color);
     font-size: 0.9em;
     margin-left: 10px;
     transition: color 0.3s ease;
@@ -187,7 +195,6 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
     background: var(--success-color);
     transition: transform 0.3s ease;
     transform: scaleX(0);
-    transform-origin: left;
 }
 
 .restore-button:hover::after {
@@ -195,7 +202,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
 }
 
 .restore-button:hover {
-    color: var(--success-color);
+    background-color: var(--success-color);
 }
 
 /* Ensure the Restore button is not affected by the completed class */

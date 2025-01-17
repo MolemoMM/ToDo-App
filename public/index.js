@@ -40,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (taskText === '') return false;
 
         const task = {
+            id: Date.now(),
             text: taskText,
             category: category,
             completed: false,
@@ -64,13 +65,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function loadTasks() {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        let recycleBinTasks = JSON.parse(localStorage.getItem('recycleBinTasks')) || [];
+
         tasks.forEach(task => {
             displayTask(task);
+        });
+
+        recycleBinTasks.forEach(task => {
+            displayTask(task, true);
         });
     }
 
     // Display a task in the list
-    function displayTask(task) {
+    function displayTask(task, isRecycleBin = false) {
         const li = document.createElement('li');
         li.classList.add('task-item');
         li.dataset.category = task.category;
@@ -86,17 +93,31 @@ document.addEventListener('DOMContentLoaded', () => {
         createdAtSpan.textContent = `Added: ${task.createdAt}`;
         createdAtSpan.classList.add('timestamp');
 
-        const completeButton = document.createElement('button');
-        completeButton.textContent = 'Complete';
-        completeButton.addEventListener('click', () => {
-            moveToRecycleBin(li, task);
-        });
+        const actionButton = document.createElement('button');
+        if (isRecycleBin) {
+            actionButton.textContent = 'Restore';
+            actionButton.classList.add('restore-button');
+            actionButton.addEventListener('click', () => {
+                restoreTask(task, li);
+            });
+        } else {
+            actionButton.textContent = 'Complete';
+            actionButton.addEventListener('click', () => {
+                moveToRecycleBin(li, task);
+            });
+        }
 
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
         li.appendChild(createdAtSpan);
-        li.appendChild(completeButton);
-        taskList.appendChild(li);
+        li.appendChild(actionButton);
+
+        if (isRecycleBin) {
+            recycleBin.appendChild(li);
+            li.classList.add('completed');
+        } else {
+            taskList.appendChild(li);
+        }
 
         // Add animation class
         li.classList.add('fade-in');
@@ -104,23 +125,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Toggle task completion (mark as completed or not)
     function toggleTaskCompletion(taskId, li) {
-        fetch(`/tasks/${taskId}/toggle`, { method: 'PATCH' })
-            .then(response => response.json())
-            .then(data => {
-                li.classList.toggle('completed', data.completed);
-                // Add animation class
-                li.classList.add('slide-in');
-            })
-            .catch(err => console.error('Error toggling completion:', err));
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        const task = tasks.find(task => task.id === taskId);
+        if (task) {
+            task.completed = !task.completed;
+            task.completedAt = task.completed ? new Date().toLocaleString() : null;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            li.classList.toggle('completed', task.completed);
+            li.classList.add('slide-in');
+        }
     }
 
     // Delete a task
     function deleteTask(taskId, li) {
-        fetch(`/tasks/${taskId}`, { method: 'DELETE' })
-            .then(() => {
-                li.remove();
-            })
-            .catch(err => console.error('Error deleting task:', err));
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.filter(task => task.id !== taskId);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        li.remove();
     }
 
     function filterTasks() {
@@ -140,19 +161,55 @@ document.addEventListener('DOMContentLoaded', () => {
         li.classList.add('completed');
         task.completed = true;
         task.completedAt = new Date().toLocaleString();
-        saveTask(task);
+
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.filter(t => t.id !== task.id);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+
+        let recycleBinTasks = JSON.parse(localStorage.getItem('recycleBinTasks')) || [];
+        recycleBinTasks.push(task);
+        localStorage.setItem('recycleBinTasks', JSON.stringify(recycleBinTasks));
+
         recycleBin.appendChild(li);
+
+        // Replace "Complete" button with "Restore" button
+        const completeButton = li.querySelector('button');
+        completeButton.textContent = 'Restore';
+        completeButton.classList.add('restore-button');
+        completeButton.removeEventListener('click', () => moveToRecycleBin(li, task));
+        completeButton.addEventListener('click', () => restoreTask(task, li));
+    }
+
+    function restoreTask(task, li) {
+        li.classList.remove('completed');
+        task.completed = false;
+        task.completedAt = null;
+
+        let recycleBinTasks = JSON.parse(localStorage.getItem('recycleBinTasks')) || [];
+        recycleBinTasks = recycleBinTasks.filter(t => t.id !== task.id);
+        localStorage.setItem('recycleBinTasks', JSON.stringify(recycleBinTasks));
+
+        saveTask(task);
+        taskList.appendChild(li);
+
+        // Replace "Restore" button with "Complete" button
+        const restoreButton = li.querySelector('button');
+        restoreButton.textContent = 'Complete';
+        restoreButton.classList.remove('restore-button');
+        restoreButton.removeEventListener('click', () => restoreTask(task, li));
+        restoreButton.addEventListener('click', () => moveToRecycleBin(li, task));
     }
 
     function clearRecycleBin() {
         recycleBin.innerHTML = '';
-        localStorage.setItem('tasks', JSON.stringify([]));
+        localStorage.setItem('recycleBinTasks', JSON.stringify([]));
     }
 
     function clearAllData() {
         taskList.innerHTML = '';
         recycleBin.innerHTML = '';
         localStorage.setItem('tasks', JSON.stringify([]));
+        localStorage.setItem('recycleBinTasks', JSON.stringify([]));
     }
 
     function toggleRecycleBin() {
