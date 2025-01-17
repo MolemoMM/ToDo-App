@@ -89,9 +89,13 @@ document.addEventListener('DOMContentLoaded', () => {
         categorySpan.textContent = task.category;
         categorySpan.classList.add('category');
 
-        const createdAtSpan = document.createElement('span');
-        createdAtSpan.textContent = `Added: ${task.createdAt}`;
-        createdAtSpan.classList.add('timestamp');
+        const timestampSpan = document.createElement('span');
+        if (isRecycleBin) {
+            timestampSpan.textContent = `Completed: ${task.completedAt}`;
+        } else {
+            timestampSpan.textContent = `Added: ${task.createdAt}`;
+        }
+        timestampSpan.classList.add('timestamp');
 
         const actionButton = document.createElement('button');
         if (isRecycleBin) {
@@ -109,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
-        li.appendChild(createdAtSpan);
+        li.appendChild(timestampSpan);
         li.appendChild(actionButton);
 
         if (isRecycleBin) {
