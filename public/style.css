@@ -15,7 +15,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', Times, serif;
     background-color: var(--bg-color);
     color: var(--text-color);
     margin: 0;
@@ -47,8 +47,15 @@ h1, h3 {
 }
 
 h1 {
-    font-size: 1.5em; /* Make it small */
-    opacity: 0.7; /* Make it transparent */
+    font-size: 1.5em; /* Make it bigger */
+    color: var(--text-color); /* Darker color */
+    opacity: 1; /* Fully opaque */
+}
+
+h3 {
+    font-size: 0.8em; /* Make it smaller */
+    color: var(--other-color); /* Lighter color */
+    opacity: 0.8; /* Slightly transparent */
 }
 
 .add-task, .filter-tasks {
