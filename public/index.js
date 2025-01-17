@@ -8,14 +8,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearRecycleBinButton = document.getElementById('clearRecycleBinButton');
     const clearAllDataButton = document.getElementById('clearAllDataButton');
     const recycleBinIcon = document.getElementById('recycleBinIcon');
-    const toggleBackgroundButton = document.getElementById('toggleBackgroundButton');
-    const bgVideo = document.getElementById('bgVideo');
-    const videoSources = [
-        './images/vid1.mp4',
-        './images/vid2.mp4',
-        './images/vid3.mp4'
+    const backgroundImages = [
+        './images/pic9.jpg',
+        './images/pic2.jpg',
+        './images/pic3.jpg',
+        './images/pic4.jpg',
+        './images/pic5.jpg',
     ];
-    let currentVideoIndex = 0;
+    let currentImageIndex = 0;
 
     // Initialize Typed.js for the h1 heading
   
@@ -32,7 +32,6 @@ document.addEventListener('DOMContentLoaded', () => {
     clearRecycleBinButton.addEventListener('click', clearRecycleBin);
     clearAllDataButton.addEventListener('click', clearAllData);
     recycleBinIcon.addEventListener('click', toggleRecycleBin);
-    toggleBackgroundButton.addEventListener('click', toggleBackgroundVideo);
 
     function addTask() {
         const taskText = taskInput.value.trim();
@@ -139,84 +138,36 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function moveToRecycleBin(li, task) {
         li.classList.add('completed');
+        task.completed = true;
+        task.completedAt = new Date().toLocaleString();
+        saveTask(task);
         recycleBin.appendChild(li);
-
-        // Add Restore button
-        const restoreButton = document.createElement('button');
-        restoreButton.textContent = 'Restore';
-        restoreButton.classList.add('restore-button');
-        restoreButton.addEventListener('click', () => {
-            restoreTask(li);
-        });
-        li.appendChild(restoreButton);
-
-        // Add completed timestamp
-        const completedAtSpan = document.createElement('span');
-        completedAtSpan.textContent = `Completed: ${new Date().toLocaleString()}`;
-        completedAtSpan.classList.add('timestamp');
-        li.appendChild(completedAtSpan);
-
-        // Save to JSON file
-        saveCompletedTask(task);
-    }
-
-    function restoreTask(li) {
-        li.classList.remove('completed');
-        taskList.appendChild(li);
-        const restoreButton = li.querySelector('.restore-button');
-        if (restoreButton) {
-            restoreButton.remove();
-        }
-        const completedAtSpan = li.querySelector('.timestamp');
-        if (completedAtSpan) {
-            completedAtSpan.remove();
-        }
     }
 
     function clearRecycleBin() {
-        while (recycleBin.firstChild) {
-            recycleBin.removeChild(recycleBin.firstChild);
-        }
+        recycleBin.innerHTML = '';
+        localStorage.setItem('tasks', JSON.stringify([]));
     }
 
     function clearAllData() {
-        localStorage.removeItem('tasks');
-        while (taskList.firstChild) {
-            taskList.removeChild(taskList.firstChild);
-        }
-        clearRecycleBin();
-    }
-
-    function fireConfetti() {
-        confetti({
-            particleCount: 100,
-            spread: 70,
-            origin: { y: 0.6 }
-        });
+        taskList.innerHTML = '';
+        recycleBin.innerHTML = '';
+        localStorage.setItem('tasks', JSON.stringify([]));
     }
 
     function toggleRecycleBin() {
         recycleBin.classList.toggle('hidden');
     }
 
-    function saveCompletedTask(task) {
-        fetch('/saveCompletedTask', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ task: task.textContent })
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Task saved:', data);
-        })
-        .catch(err => console.error('Error saving task:', err));
+    // Slideshow functionality
+    function changeBackgroundImage() {
+        currentImageIndex = (currentImageIndex + 1) % backgroundImages.length;
+        document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
     }
 
-    function toggleBackgroundVideo() {
-        currentVideoIndex = (currentVideoIndex + 1) % videoSources.length;
-        bgVideo.querySelector('source').src = videoSources[currentVideoIndex];
-        bgVideo.load();
-    }
+    // Change background image every 5 seconds
+    setInterval(changeBackgroundImage, 5000);
+
+    // Set initial background image
+    document.body.style.backgroundImage = `url(${backgroundImages[currentImageIndex]})`;
 });

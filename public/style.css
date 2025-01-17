@@ -20,10 +20,10 @@ body {
     color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-image: url('./images/vid.mp4'); /* Add background image */
     background-size: cover; /* Ensure the image covers the entire background */
-  
+    background-position: center; /* Center the background image */
     background-repeat: no-repeat; /* Prevent the image from repeating */
+    transition: background-image 1s ease-in-out; /* Smooth transition for background image */
 }
 
 .container {
@@ -80,7 +80,6 @@ h1 {
     background: var(--success-color);
     transition: transform 0.3s ease;
     transform: scaleX(0);
-    
 }
 
 .add-task button:hover::after {
