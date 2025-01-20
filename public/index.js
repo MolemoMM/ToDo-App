@@ -88,7 +88,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const taskSpan = document.createElement('span');
         taskSpan.textContent = task.text;
-        taskSpan.classList.add('task-text'); // Add this line
+        taskSpan.classList.add('task-text');
+        taskSpan.setAttribute('data-full-text', task.text); // Add this line
 
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
@@ -130,6 +131,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Add animation class
         li.classList.add('fade-in');
+
+        // Add click event to show full text
+        taskSpan.addEventListener('click', () => {
+            alert(task.text);
+        });
+
+        // Add hover event to show full text
+        taskSpan.addEventListener('mouseover', () => {
+            taskSpan.title = task.text;
+        });
     }
 
     // Toggle task completion (mark as completed or not)

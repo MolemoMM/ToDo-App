@@ -159,6 +159,30 @@ ul#taskList li .task-text, ul#recycleBin li .task-text {
     overflow: hidden; /* Hide overflowed text */
     text-overflow: ellipsis; /* Add ellipsis (...) to indicate overflow */
     text-align: center; /* Center the text */
+    position: relative; /* Position relative for the tooltip */
+}
+
+/* Add styles for the tooltip */
+ul#taskList li .task-text::after, ul#recycleBin li .task-text::after {
+    content: attr(data-full-text); /* Show the full text */
+    position: absolute;
+    top: 100%; /* Position below the text */
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #000;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Hide by default */
+}
+
+/* Show tooltip on hover */
+ul#taskList li .task-text:hover::after, ul#recycleBin li .task-text:hover::after {
+    display: block;
 }
 
 /* Add styles for the buttons */
