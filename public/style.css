@@ -123,7 +123,7 @@ ul#taskList li, ul#recycleBin li {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     transition: background-color 0.3s ease;
     animation: fadeIn 0.5s ease-in-out;
 }
@@ -152,12 +152,13 @@ ul#taskList li .timestamp, ul#recycleBin li .timestamp {
     margin-top: 5px;
 }
 
-/* Add styles for the task text to handle overflow */
+/* Add styles for the task text to handle overflow and centering */
 ul#taskList li .task-text, ul#recycleBin li .task-text {
-    flex: 1;
+    flex: 1; /* Take up remaining space */
     white-space: nowrap; /* Prevent text from wrapping */
     overflow: hidden; /* Hide overflowed text */
     text-overflow: ellipsis; /* Add ellipsis (...) to indicate overflow */
+    text-align: center; /* Center the text */
 }
 
 /* Add styles for the buttons */
