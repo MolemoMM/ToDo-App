@@ -151,7 +151,15 @@ ul#taskList li .timestamp, ul#recycleBin li .timestamp {
     color: var(--other-color);
     margin-top: 5px;
 }
- 
+
+/* Add styles for the task text to handle overflow */
+ul#taskList li .task-text, ul#recycleBin li .task-text {
+    flex: 1;
+    white-space: nowrap; /* Prevent text from wrapping */
+    overflow: hidden; /* Hide overflowed text */
+    text-overflow: ellipsis; /* Add ellipsis (...) to indicate overflow */
+}
+
 /* Add styles for the buttons */
 ul#taskList li button, ul#recycleBin li button {
     background: none;

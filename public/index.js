@@ -88,6 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const taskSpan = document.createElement('span');
         taskSpan.textContent = task.text;
+        taskSpan.classList.add('task-text'); // Add this line
 
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
