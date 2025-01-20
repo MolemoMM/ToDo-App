@@ -200,7 +200,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
     background: var(--success-color);
     border: none;
     cursor: pointer;
-    color: var(--second-bg-color);
+    color: var(--success-color);
     font-size: 0.9em;
     margin-left: 10px;
     transition: color 0.3s ease;
@@ -232,7 +232,7 @@ ul#taskList li button:hover, ul#recycleBin li button:hover {
 /* Ensure the Restore button is not affected by the completed class */
 ul#recycleBin li.completed .restore-button {
     text-decoration: none;
-    color: var(--main-color);
+    color: var(--success-color);
 }
 
 /* Add styles for the Clear Recycle Bin button */
