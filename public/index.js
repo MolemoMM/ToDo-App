@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+       // DOM elements
     const taskInput = document.getElementById('taskInput');
     const addTaskButton = document.getElementById('addTaskButton');
     const taskList = document.getElementById('taskList');
@@ -17,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let currentImageIndex = 0;
 
-    // Initialize Typed.js for the h1 heading
+  
   
 
     // Load tasks from localStorage when the page loads
@@ -33,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearAllDataButton.addEventListener('click', clearAllData);
     recycleBinIcon.addEventListener('click', toggleRecycleBin);
 
+     // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
         const category = categorySelect.value;
@@ -57,12 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
+    // Function to save a task to localStorage
     function saveTask(task) {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         tasks.push(task);
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
+      // Function to load tasks from localStorage
     function loadTasks() {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         let recycleBinTasks = JSON.parse(localStorage.getItem('recycleBinTasks')) || [];
@@ -160,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-
+      // Function to move a task to the recycle bin
     function moveToRecycleBin(li, task) {
         li.classList.add('completed');
         task.completed = true;
@@ -176,6 +180,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         recycleBin.appendChild(li);
 
+        // Update the timestamp to show the completed time
+        const timestampSpan = li.querySelector('.timestamp');
+        timestampSpan.textContent = `Completed: ${task.completedAt}`;
+
         // Replace "Complete" button with "Restore" button
         const completeButton = li.querySelector('button');
         completeButton.textContent = 'Restore';
@@ -183,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
         completeButton.removeEventListener('click', () => moveToRecycleBin(li, task));
         completeButton.addEventListener('click', () => restoreTask(task, li));
     }
-
+     // Function to restore a task from the recycle bin
     function restoreTask(task, li) {
         li.classList.remove('completed');
         task.completed = false;
@@ -203,12 +211,12 @@ document.addEventListener('DOMContentLoaded', () => {
         restoreButton.removeEventListener('click', () => restoreTask(task, li));
         restoreButton.addEventListener('click', () => moveToRecycleBin(li, task));
     }
-
+     // Function to clear the recycle bin
     function clearRecycleBin() {
         recycleBin.innerHTML = '';
         localStorage.setItem('recycleBinTasks', JSON.stringify([]));
     }
-
+     // Function to clear all data
     function clearAllData() {
         taskList.innerHTML = '';
         recycleBin.innerHTML = '';

@@ -4,18 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDo App</title>
+    <!-- Link to the CSS file -->
     <link rel="stylesheet" href="style.css">
+    <!-- External libraries for animations and effects -->
     <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- Main heading -->
         <h1>Organize Your Tasks!</h1>
+        <!-- Instructions for the user -->
         <h3>Please click on "complete" to mark as <strong>Completed</strong></h3>
         <h3>Please click on the recycle-bin to view completed tasks </h3>
         <hr>
         <br>
+        <!-- Section to add a new task -->
         <div class="add-task">
             <input type="text" id="taskInput" placeholder="Enter a new task">
             <select id="categorySelect">
@@ -31,6 +36,7 @@
         </div>
         <br>
         
+        <!-- Section to filter tasks by category -->
         <div class="filter-tasks">
             <label for="filterCategory">Filter by category:</label>
             <select id="filterCategory">
@@ -43,6 +49,7 @@
                 <option value="education">Education</option>
             </select>
         </div>
+        <!-- Task list and recycle bin will be added here -->
         <ul id="taskList"></ul>
         <div class="button-container">
             <button id="clearRecycleBinButton">Clear Recycle Bin</button>
@@ -52,6 +59,7 @@
         <ul id="recycleBin" class="hidden"></ul>
     </div>
 
+    <!-- Link to the JavaScript file -->
     <script src="index.js"></script>
 </body>
 </html>
