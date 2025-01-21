@@ -12,6 +12,7 @@
     --success-color: #28a745; /* Green success color */
     --warning-color: #ffc107; /* Yellow warning color */
     --danger-color: #dc3545; /* Red danger color */
+    --border-color: black;
 }
 
 body {
@@ -491,15 +492,15 @@ h1 {
 /* Define keyframes for the breathing effect */
 @keyframes breathing {
     0% {
-        border-color: var(--main-color);
-        box-shadow: 0 0 10px var(--main-color);
+        border-color: var(--border-color);
+        box-shadow: 0 0 10px var(--border-color);
     }
     50% {
-        border-color: var(--success-color);
-        box-shadow: 0 0 20px var(--success-color);
+        border-color: var(--border-color);
+        box-shadow: 0 0 20px var(--border-color);
     }
     100% {
-        border-color: var(--main-color);
-        box-shadow: 0 0 10px var (--main-color);
+        border-color: var(--border-color);
+        box-shadow: 0 0 10px var (var(--border-color));
     }
 }
