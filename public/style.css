@@ -40,6 +40,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     box-sizing: border-box; /* Include padding and border in element's total width and height */
+    border: 2px solid var(--main-color); /* Add border */
+    animation: breathing 3s infinite; /* Apply breathing animation */
 }
 
 h1, h3 {
@@ -466,4 +468,38 @@ ul#recycleBin li.completed .restore-button {
     z-index: -1;
     transform: translate(-50%, -50%);
     background-size: cover;
+}
+
+
+/* Define keyframes for the animation */
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Apply the animation to the h1 element */
+h1 {
+    animation: slideIn 1s ease-in-out;
+}
+
+/* Define keyframes for the breathing effect */
+@keyframes breathing {
+    0% {
+        border-color: var(--main-color);
+        box-shadow: 0 0 10px var(--main-color);
+    }
+    50% {
+        border-color: var(--success-color);
+        box-shadow: 0 0 20px var(--success-color);
+    }
+    100% {
+        border-color: var(--main-color);
+        box-shadow: 0 0 10px var (--main-color);
+    }
 }

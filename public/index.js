@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-       // DOM elements
+    // DOM elements
     const taskInput = document.getElementById('taskInput');
     const addTaskButton = document.getElementById('addTaskButton');
     const taskList = document.getElementById('taskList');
@@ -18,9 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     let currentImageIndex = 0;
 
-  
-  
-
     // Load tasks from localStorage when the page loads
     loadTasks();
 
@@ -34,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     clearAllDataButton.addEventListener('click', clearAllData);
     recycleBinIcon.addEventListener('click', toggleRecycleBin);
 
-     // Function to add a new task
+    // Function to add a new task
     function addTask() {
         const taskText = taskInput.value.trim();
         const category = categorySelect.value;
@@ -66,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
-      // Function to load tasks from localStorage
+    // Function to load tasks from localStorage
     function loadTasks() {
         let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
         let recycleBinTasks = JSON.parse(localStorage.getItem('recycleBinTasks')) || [];
@@ -89,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskSpan = document.createElement('span');
         taskSpan.textContent = task.text;
         taskSpan.classList.add('task-text');
-        taskSpan.setAttribute('data-full-text', task.text); // Add this line
+        taskSpan.setAttribute('data-full-text', task.text);
 
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
@@ -117,10 +114,17 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.addEventListener('click', () => {
+            editTask(task, taskSpan);
+        });
+
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
         li.appendChild(timestampSpan);
         li.appendChild(actionButton);
+        li.appendChild(editButton);
 
         if (isRecycleBin) {
             recycleBin.appendChild(li);
@@ -141,6 +145,24 @@ document.addEventListener('DOMContentLoaded', () => {
         taskSpan.addEventListener('mouseover', () => {
             taskSpan.title = task.text;
         });
+    }
+
+    // Function to edit a task
+    function editTask(task, taskSpan) {
+        const newTaskText = prompt('Edit task:', task.text);
+        if (newTaskText !== null && newTaskText.trim() !== '') {
+            task.text = newTaskText.trim();
+            taskSpan.textContent = task.text;
+            taskSpan.setAttribute('data-full-text', task.text);
+            updateTaskInLocalStorage(task);
+        }
+    }
+
+    // Function to update a task in localStorage
+    function updateTaskInLocalStorage(updatedTask) {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+        tasks = tasks.map(task => task.id === updatedTask.id ? updatedTask : task);
+        localStorage.setItem('tasks', JSON.stringify(tasks));
     }
 
     // Toggle task completion (mark as completed or not)
@@ -176,7 +198,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-      // Function to move a task to the recycle bin
+
+    // Function to move a task to the recycle bin
     function moveToRecycleBin(li, task) {
         li.classList.add('completed');
         task.completed = true;
@@ -203,7 +226,8 @@ document.addEventListener('DOMContentLoaded', () => {
         completeButton.removeEventListener('click', () => moveToRecycleBin(li, task));
         completeButton.addEventListener('click', () => restoreTask(task, li));
     }
-     // Function to restore a task from the recycle bin
+
+    // Function to restore a task from the recycle bin
     function restoreTask(task, li) {
         li.classList.remove('completed');
         task.completed = false;
@@ -223,12 +247,14 @@ document.addEventListener('DOMContentLoaded', () => {
         restoreButton.removeEventListener('click', () => restoreTask(task, li));
         restoreButton.addEventListener('click', () => moveToRecycleBin(li, task));
     }
-     // Function to clear the recycle bin
+
+    // Function to clear the recycle bin
     function clearRecycleBin() {
         recycleBin.innerHTML = '';
         localStorage.setItem('recycleBinTasks', JSON.stringify([]));
     }
-     // Function to clear all data
+
+    // Function to clear all data
     function clearAllData() {
         taskList.innerHTML = '';
         recycleBin.innerHTML = '';
