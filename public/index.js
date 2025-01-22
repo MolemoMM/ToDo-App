@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskSpan = document.createElement('span');
         taskSpan.textContent = task.text;
         taskSpan.classList.add('task-text');
-        taskSpan.setAttribute('data-full-text', task.text);
+        taskSpan.setAttribute('data-full-text', task.text); // Add this line
 
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
@@ -114,17 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const editButton = document.createElement('button');
-        editButton.textContent = 'Edit';
-        editButton.addEventListener('click', () => {
-            editTask(task, taskSpan);
-        });
-
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
         li.appendChild(timestampSpan);
         li.appendChild(actionButton);
-        li.appendChild(editButton);
 
         if (isRecycleBin) {
             recycleBin.appendChild(li);
