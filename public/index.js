@@ -117,16 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        const editButton = document.createElement('button');
-        editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
-        editButton.addEventListener('click', () => {
-            editTask(task, taskSpan);
-        });
-
         taskDetails.appendChild(categorySpan);
         taskDetails.appendChild(timestampSpan);
         taskDetails.appendChild(actionButton);
-        taskDetails.appendChild(editButton); // Append the edit button after the action button
+
+        if (!isRecycleBin) {
+            const editButton = document.createElement('button');
+            editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
+            editButton.addEventListener('click', () => {
+                editTask(task, taskSpan);
+            });
+            taskDetails.appendChild(editButton); // Append the edit button after the action button
+        }
 
         li.appendChild(taskSpan);
         li.appendChild(taskDetails);
@@ -230,6 +232,12 @@ document.addEventListener('DOMContentLoaded', () => {
         completeButton.classList.add('restore-button');
         completeButton.removeEventListener('click', () => moveToRecycleBin(li, task));
         completeButton.addEventListener('click', () => restoreTask(task, li));
+
+        // Remove the edit button if it exists
+        const editButton = li.querySelector('.fa-edit');
+        if (editButton) {
+            editButton.parentElement.remove();
+        }
     }
 
     // Function to restore a task from the recycle bin
@@ -251,6 +259,15 @@ document.addEventListener('DOMContentLoaded', () => {
         restoreButton.classList.remove('restore-button');
         restoreButton.removeEventListener('click', () => restoreTask(task, li));
         restoreButton.addEventListener('click', () => moveToRecycleBin(li, task));
+
+        // Add the edit button back
+        const taskDetails = li.querySelector('.task-details');
+        const editButton = document.createElement('button');
+        editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
+        editButton.addEventListener('click', () => {
+            editTask(task, li.querySelector('.task-text'));
+        });
+        taskDetails.appendChild(editButton);
     }
 
     // Function to clear the recycle bin
