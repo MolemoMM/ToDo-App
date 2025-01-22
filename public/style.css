@@ -75,7 +75,7 @@ h3 {
     flex: 1;
     padding: 10px;
     margin-right: 10px;
-    border: 1px solid var(--alt-color);
+    border: 1px solid  var(--other-color);
     border-radius: 4px;
     margin-bottom: 10px;
 }
@@ -90,6 +90,9 @@ h3 {
     font-weight: 500;
     border-radius: 13px; /* Rounded corners */
     border: none;
+    position: relative;
+    overflow: hidden;
+    transition: background-color 0.3s ease, letter-spacing 0.3s ease; /* Add transition for letter-spacing */
 }
 
 .add-task button::after {
@@ -109,6 +112,7 @@ h3 {
 
 .add-task button:hover {
     background-color: var(--success-color);
+    letter-spacing: 2px; /* Adds spacing between letters on hover */
 }
 
 ul#taskList, ul#recycleBin {
@@ -490,6 +494,7 @@ h1 {
 }
 
 /* Define keyframes for the breathing effect */
+/* Define keyframes for the breathing effect */
 @keyframes breathing {
     0% {
         border-color: var(--main-color);
@@ -503,4 +508,25 @@ h1 {
         border-color: var(--main-color);
         box-shadow: 0 0 10px var(--main-color);
     }
+}
+
+/* Footer styles */
+.footer {
+    padding: 20px 14%;
+    background: transparent;
+    color: var(--text-color);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* Center the content horizontally */
+    position: fixed; /* Fix the footer at the bottom */
+    bottom: 0; /* Align to the bottom */
+    width: 100%; /* Full width */
+    text-align: center; /* Center the text */
+}
+
+/* Copyright text in footer */
+.Copyright p {
+    font-size: 15px;
+    font-weight: 400;
+    color: var(--second-bg-color);
 }
