@@ -88,6 +88,9 @@ document.addEventListener('DOMContentLoaded', () => {
         taskSpan.classList.add('task-text');
         taskSpan.setAttribute('data-full-text', task.text);
 
+        const taskDetails = document.createElement('div');
+        taskDetails.classList.add('task-details');
+
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
         categorySpan.classList.add('category');
@@ -120,11 +123,13 @@ document.addEventListener('DOMContentLoaded', () => {
             editTask(task, taskSpan);
         });
 
+        taskDetails.appendChild(categorySpan);
+        taskDetails.appendChild(timestampSpan);
+        taskDetails.appendChild(actionButton);
+        taskDetails.appendChild(editButton); // Append the edit button after the action button
+
         li.appendChild(taskSpan);
-        li.appendChild(categorySpan);
-        li.appendChild(timestampSpan);
-        li.appendChild(actionButton);
-        li.appendChild(editButton);
+        li.appendChild(taskDetails);
 
         if (isRecycleBin) {
             recycleBin.appendChild(li);
