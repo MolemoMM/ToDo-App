@@ -124,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!isRecycleBin) {
             const editButton = document.createElement('button');
             editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
+            editButton.classList.add('edit-button');
             editButton.addEventListener('click', () => {
                 editTask(task, taskSpan);
             });
@@ -234,9 +235,9 @@ document.addEventListener('DOMContentLoaded', () => {
         completeButton.addEventListener('click', () => restoreTask(task, li));
 
         // Remove the edit button if it exists
-        const editButton = li.querySelector('.fa-edit');
+        const editButton = li.querySelector('.edit-button');
         if (editButton) {
-            editButton.parentElement.remove();
+            editButton.remove();
         }
     }
 
@@ -264,6 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskDetails = li.querySelector('.task-details');
         const editButton = document.createElement('button');
         editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
+        editButton.classList.add('edit-button');
         editButton.addEventListener('click', () => {
             editTask(task, li.querySelector('.task-text'));
         });
