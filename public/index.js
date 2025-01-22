@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const taskSpan = document.createElement('span');
         taskSpan.textContent = task.text;
         taskSpan.classList.add('task-text');
-        taskSpan.setAttribute('data-full-text', task.text); // Add this line
+        taskSpan.setAttribute('data-full-text', task.text);
 
         const categorySpan = document.createElement('span');
         categorySpan.textContent = task.category;
@@ -102,22 +102,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const actionButton = document.createElement('button');
         if (isRecycleBin) {
-            actionButton.textContent = 'Restore';
+            actionButton.innerHTML = '<i class="fas fa-undo"></i>'; // Restore icon
             actionButton.classList.add('restore-button');
             actionButton.addEventListener('click', () => {
                 restoreTask(task, li);
             });
         } else {
-            actionButton.textContent = 'Complete';
+            actionButton.innerHTML = '<i class="fas fa-check"></i>'; // Complete icon
             actionButton.addEventListener('click', () => {
                 moveToRecycleBin(li, task);
             });
         }
 
+        const editButton = document.createElement('button');
+        editButton.innerHTML = '<i class="fas fa-edit"></i>'; // Edit icon
+        editButton.addEventListener('click', () => {
+            editTask(task, taskSpan);
+        });
+
         li.appendChild(taskSpan);
         li.appendChild(categorySpan);
         li.appendChild(timestampSpan);
         li.appendChild(actionButton);
+        li.appendChild(editButton);
 
         if (isRecycleBin) {
             recycleBin.appendChild(li);
@@ -214,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Replace "Complete" button with "Restore" button
         const completeButton = li.querySelector('button');
-        completeButton.textContent = 'Restore';
+        completeButton.innerHTML = '<i class="fas fa-undo"></i>'; // Restore icon
         completeButton.classList.add('restore-button');
         completeButton.removeEventListener('click', () => moveToRecycleBin(li, task));
         completeButton.addEventListener('click', () => restoreTask(task, li));
@@ -235,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Replace "Restore" button with "Complete" button
         const restoreButton = li.querySelector('button');
-        restoreButton.textContent = 'Complete';
+        restoreButton.innerHTML = '<i class="fas fa-check"></i>'; // Complete icon
         restoreButton.classList.remove('restore-button');
         restoreButton.removeEventListener('click', () => restoreTask(task, li));
         restoreButton.addEventListener('click', () => moveToRecycleBin(li, task));
