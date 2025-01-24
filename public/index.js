@@ -10,11 +10,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const clearAllDataButton = document.getElementById('clearAllDataButton');
     const recycleBinIcon = document.getElementById('recycleBinIcon');
     const backgroundImages = [
-        './images/pic9.jpg',
-        './images/pic2.jpg',
-        './images/pic3.jpg',
-        './images/pic4.jpg',
-        './images/pic5.jpg',
+        './images/pic14.jpg',
+        './images/pic13.jpg',
+        './images/pic12.jpg',
+       
     ];
     let currentImageIndex = 0;
 

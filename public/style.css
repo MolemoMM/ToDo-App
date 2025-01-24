@@ -41,8 +41,8 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 8px;
     box-sizing: border-box; /* Include padding and border in element's total width and height */
-    border: 2px solid var(--main-color); /* Add border */
-    animation: breathing 3s infinite; /* Apply breathing animation */
+    border: 2px solid var(--border-color); /* Add border */
+    animation: slideIn 0.5s ease-in-out; /* Apply slide-in animation */
 }
 
 h1, h3 {
@@ -518,8 +518,8 @@ h1 {
 /* Define keyframes for the breathing effect */
 @keyframes breathing {
     0% {
-        border-color: var(--main-color);
-        box-shadow: 0 0 10px var(--main-color);
+        border-color: var(--border-color);
+        box-shadow: 0 0 10px var(--border-color);
     }
     50% {
         border-color: var(--ann-color);
@@ -551,3 +551,4 @@ h1 {
     font-weight: 400;
     color: var(--second-bg-color);
 }
+
